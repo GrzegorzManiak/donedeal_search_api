@@ -1,0 +1,15 @@
+{
+    "name": "donedeal_search_api",
+    "version": "1.0.0",
+    "description": "A reverse engineered donedeal.ie search api, packaged for easy use.",
+    "main": "index.js",
+    "keywords": [
+        "donedeal"
+    ],
+    "homepage": "https://github.com/owner/project#readme",
+    "author": "Grzegorz Maniak",
+    "license": "ISC",
+    "dependencies": {
+        "sync-fetch": "^0.3.0"
+    }
+}
