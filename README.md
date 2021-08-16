@@ -8,15 +8,18 @@ npm install donedeal_search_api
 
 # Parameters
 
-** param Object input - Input object that conatins the search parameters.
-** param string input.query - Search query.
-** param string input.counties - Define an array of counties, which will result in results only from those counties.
-** param number input.page - The ammount of results to return, defalted to 30 per page.
-** param number input.min_price - Minimum price of returned results.
-** param number input.max_price - Maximum price of returned results.
+> param Object input - Input object that conatins the search parameters.  
+> param string input.query - Search query.   
+> param string input.counties - Define an array of counties, which will result in results only from those counties.   
+> param number input.page - The ammount of results to return, defalted to 30 per page.   
+> param number input.min_price - Minimum price of returned results.   
+> param number input.max_price - Maximum price of returned results.   
 
-** param Boolean rawdata - If true, returns raw data straight from the api.
-** param Boolean async - If true, Returns a promise.
+> param Boolean rawdata - If true, returns raw data straight from the api.  
+> param Boolean async - If true, Returns a promise.  
+
+
+# Examples
 
 ```javascript
 const donedeal = require('donedeal_search_api');
