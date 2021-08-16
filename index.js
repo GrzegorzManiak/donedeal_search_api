@@ -1,5 +1,6 @@
 // I justified using sync-fetch as its alot easier to make it asyncrounus than it is to make node-fetch sync
 const fetch = require("sync-fetch");
+const Counties = ['antrim', 'armagh', 'carlow', 'cavan', 'clare', 'cork', 'derry', 'donegal', 'down', 'dublin', 'fermanagh', 'galway', 'kerry', 'kildare', 'kilkenny', 'laois', 'leitrim', 'longford', 'louth', 'mayo', 'meath', 'monaghan', 'offaly', 'roscommon', 'sligo', 'tipperary', 'tyrone', 'waterford', 'westmeath', 'wexford', 'wicklow'];
 
 const defaults = {
     items_per_page: 30,
@@ -25,6 +26,12 @@ function QueryConstructor(input) {
         viewType: defaults.viewType
     }
 
+    let Valid_Counties = [];
+    if (input.counties) input.counties.forEach(county => {
+        //--// Checks if the Counties paramater contains valid counties
+        if (Counties.includes(county.toLowerCase())) Base.area = [...Valid_Counties, county.toLowerCase()];
+    })
+
     //--// Checks if the search query contains a minimum price, if so add it to the stack.
     if (input.min_price && typeof input.min_price === 'number') Base.price_from = input.min_price;
 
@@ -34,7 +41,6 @@ function QueryConstructor(input) {
     if (typeof input.page === 'number') {
         if (input.page === 0) Base.start = 0;
         else Base.start = defaults.items_per_page * --input.page;
-
         Base.max = defaults.items_per_page * input.page;
     } else {
         Base.start = 0;
@@ -52,7 +58,10 @@ function PraseData(data, obj = []) {
             description: ad['description'],
             price: ad['price'],
             seller: ad['seller']['name'],
+            seller_verification: ad['seller']['verification'],
             url: ad['friendlyUrl'],
+            wanted: ad['wanted'],
+            county: ad['county'],
             img: function() {
                 // If the listing contains no images, return null.
                 // All other values are required therefore need no checking.
@@ -94,6 +103,7 @@ module.exports = {
      * 
      * @param {Object} input - Input object that conatins the search parameters.
      * @param {string} input.query - Search query.
+     * @param {string} input.counties - Define an array of counties, which will result in results only from those counties.
      * @param {number} input.page - The ammount of results to return, defalted to 30 per page.
      * @param {number} input.min_price - Minimum price of returned results.
      * @param {number} input.max_price - Maximum price of returned results.
@@ -101,7 +111,7 @@ module.exports = {
      * @param {Boolean} rawdata - If true, returns raw data straight from the api.
      * @param {Boolean} async - If true, Returns a promise.
      * 
-     * @returns {Object} { name: String, description: String, price: Number, seller: String, url: String, img: String }
+     * @returns { name: String, description: String, wanted: Boolean, county: String, price: Number, seller: String, url: String, img: String, seller_verification: Object { email: Boolean, phone: Boolean, allowedAccess: Boolean, bank: Boolean } }
      */
     search: (input, rawdata, async) => {
         return index(input, rawdata, async);
@@ -114,5 +124,12 @@ module.exports = {
      */
     defaults: () => {
         return defaults;
+    },
+
+    /**
+     * Returns an Array of all Irish counties
+     */
+    counties: () => {
+        return Counties;
     }
 }
