@@ -26,10 +26,10 @@ function QueryConstructor(input) {
     }
 
     //--// Checks if the search query contains a minimum price, if so add it to the stack.
-    if (input.price_min && typeof input.price_min === 'number') Base.price_from = input.price_min;
+    if (input.min_price && typeof input.min_price === 'number') Base.price_from = input.min_price;
 
     //--// Checks if the search query contains a maximum price, if so add it to the stack.
-    if (input.price_max && typeof input.price_max === 'number') Base.price_to = input.price_max;
+    if (input.max_price && typeof input.max_price === 'number') Base.price_to = input.max_price;
 
     if (typeof input.page === 'number') {
         if (input.page === 0) Base.start = 0;

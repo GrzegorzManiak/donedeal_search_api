@@ -1,6 +1,6 @@
 {
     "name": "donedeal_search_api",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "description": "A reverse engineered donedeal.ie search api, packaged for easy use.",
     "main": "index.js",
     "keywords": [
