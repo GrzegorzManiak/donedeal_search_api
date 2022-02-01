@@ -1,49 +1,43 @@
 # donedeal_search_api
-A reverse engineered donedeal.ie search api, packaged for easy use.
+This is a package that gives you access to the donedeal_search_api, I reverse engineered it from their android app, as their site returns results baked in the html, I have no idea why they did this, but this enpoint returns raw data that can be parsed by this module.
 
-# Usage
+## Usage
 ``` 
-npm install donedeal_search_api 
+clone this repo
 ```
 
-# Parameters
+## Example
+```
+import donedeal_search_api from 'donedeal_search_api'
 
-> param Object input - Input object that conatins the search parameters.  
-> param string input.query - Search query.   
-> param string input.counties - Define an array of counties, which will result in results only from those counties.   
-> param number input.page - The ammount of results to return, defalted to 30 per page.   
-> param number input.min_price - Minimum price of returned results.   
-> param number input.max_price - Maximum price of returned results.   
+(async () => {
+    const data = await donedeal_search_api('Iphone 12');
+    console.log(data);
+})()
+```
 
-> param Boolean rawdata - If true, returns raw data straight from the api.  
-> param Boolean async - If true, Returns a promise.  
-
-
-# Examples
-
-```javascript
-const donedeal = require('donedeal_search_api');
-
-// sets the defualt return ammount to 50 per page
-// and sets the ad type to 'wanted' from the defualt 'forsale'
-donedeal.defaults = {
-  items_per_page: 50,
-  adType: 'wanted'
+## Parameters
+```
+// This is the Input interface, this is how you pass in the search term etc
+{
+    query: string, // This is the search term
+    counties?: Array<string>, // Counties to filter by, array
+    price_from?: number, // the cheapest price you want to see
+    price_to?: number, // the most expensive price you want to see
+    page?: number, // defualt 'items per page' is 30, therefor page 1 is 0-30, page 2 is 30-60, page 3 is 60-90 etc
+    items_per_page?: number, // howmany results you want to see, default is 30
 }
 
-donedeal.search({ query: 'test', page: 1, counties: [ 'dublin', 'meath', 'wicklow' ] min_price:10, max_price: 100});
-// => [ { name: String, description: String, wanted: Boolean, county: String, price: Number, seller: String, url: String, img: String, seller_verification: { email: Boolean, phone: Boolean, allowedAccess: Boolean, bank: Boolean } }, ... ]
-// => Only returns results from the specified counties.
-
-// Seccond Parameter defines if it should return raw api response data
-donedeal.search({ query: 'test', page: 3, max_price: 100}, true);
-// => object
-
- // Third Parameter defines if it shoul execute asynchronously
-donedeal.search({ query: 'test', page: 3, max_price: 100}, false, true);
-// => promise
-
-console.log(donedeal.counties());
-// => Array of counties in Ireland;
-
+// This is the output interface, the data will be returned in this format.
+{
+    ad?: string,
+    id?: number,
+    description?: string,
+    price?: string,
+    county?: string,
+    url?: string,
+    seller?: string,
+    wanted?: boolean,
+    img?: any,
+}
 ```
