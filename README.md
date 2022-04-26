@@ -1,5 +1,5 @@
 # donedeal_search_api
-This is a package that gives you access to the donedeal_search_api, I reverse engineered it from their android app, as their site returns results baked in the html, I have no idea why they did this, but this enpoint returns raw data that can be parsed by this module.
+This project is a TypeScript package that parses data from the Donedeal API. It is useful for finding deals on Donedeal, a popular Irish classifieds ads website. This package returns parsed data from the Donedeal API that I reverse engineered from their Android app, as the Donedeal site returns baked-in results.
 
 ## Usage
 ``` 
